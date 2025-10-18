@@ -66,14 +66,14 @@ product\_management/
     │   └── Product.js  
     │   └── Cart.js  
     ├── middlewares/  
-    │   └── authMiddleware.js  (optional: JWT auth or validation)  
+    │   └── authMiddleware.js
     ├── utils/  
-    │   └── hashPassword.js     (e.g., bcrypt helpers)  
+    │   └── hashPassword.js
     ├── config/  
-    │   └── db.js               (MongoDB connection)  
-    ├── app.js                 (Express app setup)  
-    ├── server.js              (Entry point to start server)  
-    └── .env                   (Environment variables)
+    │   └── db.js
+    ├── app.js
+    ├── server.js
+    └── .env
 
 Models: 
 
