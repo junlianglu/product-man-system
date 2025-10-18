@@ -1,6 +1,6 @@
 authController.js  
 loginUserController()  
-signupUserController()  // need to create a new cart  
+signupUserController()  
 sendResetLinkController()
 
 authService.js  
@@ -66,14 +66,14 @@ product\_management/
     │   └── Product.js  
     │   └── Cart.js  
     ├── middlewares/  
-    │   └── authMiddleware.js
+    │   └── authMiddleware.js  
     ├── utils/  
-    │   └── hashPassword.js
+    │   └── hashPassword.js  
     ├── config/  
-    │   └── db.js
-    ├── app.js
-    ├── server.js
-    └── .env
+    │   └── db.js  
+    ├── app.js  
+    ├── server.js  
+    └── .env  
 
 Models: 
 
