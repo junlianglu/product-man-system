@@ -6,7 +6,7 @@ import cartReducer from '../features/cart/cartSlice.js';
 export const store = configureStore({
     reducer: {
         auth: authReducer,
-        product: productReducer,
         cart: cartReducer,
+        products: productReducer,
     }
 });
