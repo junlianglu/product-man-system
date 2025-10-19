@@ -49,9 +49,50 @@ const productSlice = createSlice({
         })
         //addproduct
         .addCase(addProduct.pending, (state) => {
-
+            state.status = "loading";
+            state.error = null;           
         })
-
-
+        .addCase(addProduct.fulfilled, (state, action) => {
+            state.status = "succeeded";
+            state.items.push(action.payload);         
+        })
+        .addCase(addProduct.rejected, (state, action) => {
+            state.status = "failed";
+            state.error = action.error.message;           
+        })
+        //editproduct
+        .addCase(editProduct.pending, (state) => {
+            state.status = "loading";
+            state.error = null;           
+        })
+        .addCase(editProduct.fulfilled, (state, action) => {
+            state.status = "succeeded";
+            const updated = action.payload;
+            const index = state.items.findIndex((p) => p._id === updated._id);
+            if(index >= 0){
+                state.items[index] = updated;   
+            }     
+        })
+        .addCase(editProduct.rejected, (state, action) => {
+            state.status = "failed";
+            state.error = action.error.message;         
+        })
+        //removeproduct
+        .addCase(removeProduct.pending, (state) => {
+            state.status = "loading";
+            state.error = null;           
+        })
+        .addCase(removeProduct.fulfilled, (state, action) => {
+            state.status = "succeeded";
+            const deleted = action.payload;
+            state.items = state.items.filter((p) => p._id !== deleted._id);       
+        })
+        .addCase(removeProduct.rejected, (state, action) => {
+            state.status = "failed";
+            state.error = action.error.message;          
+        });
     },
 });
+
+export const {clearSelectedProduct} =  productSlice.actions;
+export default productSlice.reducer;
