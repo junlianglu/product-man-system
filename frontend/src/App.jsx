@@ -7,6 +7,9 @@ import Error from './pages/Error.jsx';
 import Home from './pages/Home/jsx';
 import Navbar from './components/navbar/Navbar.jsx';
 import Footer from './pages/Footer.jsx';
+import AddProduct from './pages/product/AddProduct.jsx';
+import EditProduct from './pages/product/EditProduct.jsx';
+import ProductDetail from './pages/product/ProductDetail.jsx';
 
 const App = () => {
   return (
@@ -21,8 +24,10 @@ const App = () => {
         { /* Protected Routes */ }
         <Route element={<ProtectedRoute />}>
           <Route path='/' element={<Home />} />
+          <Route path='/add-product' element={<AddProduct />} />
+          <Route path='/edit-product/:productId' element={<EditProduct />} />
+          <Route path='/product/:productId' element={<ProductDetail />} />
         </Route>
-
 
         <Route path='*' element={<Error />} />
       </Routes>
