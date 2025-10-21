@@ -1,15 +1,28 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { editProduct } from "../../features/product/productThunks";
+import React, {useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { editProduct,fetchProductById } from "../../features/product/productThunks";
+import {selectProductStatus, selectSelectedProduct} from "../../features/product/productSelectors";
 import ProductForm from "../../components/product/ProductForm";
+import {selectAuthToken} from "../../features/auth/authSelectors";
 
-export default function EditProduct({product}){
+export default function EditProduct(){
     const dispatch = useDispatch();
+    const {productId} = useParams();
+    const product = useSelector(selectSelectedProduct);
+    const status = useSelector(selectProductStatus);
 
+    useEffect(() => {
+        dispatch(fetchProductById(productId));
+    }, [dispatch, productId]);
+
+    const token = useSelector(selectAuthToken);
     const handleSubmit = (data) => {
-        const token = localStorage.getItem("token");
         dispatch(editProduct({productId: product._id, productData: data, token}));       
     };
+
+    if (status === "loading") return <p>Loading product...</p>;
+    if (!product) return <p>Product not found.</p>;    
 
     return (
         <div>
