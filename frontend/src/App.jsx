@@ -1,25 +1,34 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ProtectedRoute from './components/auth/ProtectedRoute';
-import Login from './pages/auth/Login';
-import Signup from './pages/auth/Signup';
-import ResetPassword from './pages/auth/ResetPassword';
+import ProtectedRoute from './components/auth/ProtectedRoute.jsx';
+import Login from './pages/auth/Login.jsx';
+import Signup from './pages/auth/Signup.jsx';
+import ResetPassword from './pages/auth/ResetPassword.jsx';
+import Error from './pages/Error.jsx';
+import Home from './pages/Home/jsx';
+import Navbar from './components/navbar/Navbar.jsx';
+import Footer from './pages/Footer.jsx';
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         { /* Public Routes */ }
-        <Route path='/login' element={<Login />}></Route>
-        <Route path='/signup' element={<Signup />}></Route>
-        <Route path='/reset-password' element={<ResetPassword />}></Route>
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
 
         { /* Protected Routes */ }
         <Route element={<ProtectedRoute />}>
-
+          <Route path='/' element={<Home />} />
         </Route>
+
+
+        <Route path='*' element={<Error />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
 
-export default App
+export default App;
