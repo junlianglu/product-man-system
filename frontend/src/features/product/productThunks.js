@@ -3,8 +3,14 @@ import {getAllProducts, getProductById,deleteProductById,
     updateProductById,createProduct,
 } from "../../api/products";
 
-export const fetchProducts = createAsyncThunk("product/fetchAll", async () => {
-    return await getAllProducts();
+export const fetchProducts = createAsyncThunk("product/fetchAll", 
+    async ({page = 1, limit = 10} = {}, thunkAPI) => {
+        try{
+            const data = await getAllProducts({page, limit});
+            return data;
+        }catch (err){
+            return thunkAPI.rejectWithValue(err.message);
+        }
 });
 
 export const fetchProductById = createAsyncThunk("product/fetchById", async (productId) => {

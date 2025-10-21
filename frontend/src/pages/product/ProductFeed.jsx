@@ -16,10 +16,16 @@ export default function ProductFeed() {
     const navigate = useNavigate();
 
     const [sortOption, setSortOption] = useState("priceLowToHigh");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        dispatch(fetchProducts());
-    }, [dispatch]);
+        dispatch(fetchProducts({page: currentPage, limit: 10})).unwrap()
+        .then((data) => {
+            if(totalPages)
+                    setTotalPages(data.totalPages);
+        }).catch(() => {});
+    }, [dispatch, currentPage]);
 
     const sortedProducts = [...products].sort((a,b) => {
         if(sortOption === "lastAdded") return new Date(b.createdAt) - new Date(a.createdAt);
@@ -75,6 +81,28 @@ export default function ProductFeed() {
                      onUpdateQuantity={handleUpdateQuantity}
                      />
                 ))}
+            </div>
+
+            <div style={{}}>
+                <button disabled={currentPage ===1} onClick={() => setCurrentPage((p) => Math.max(p-1,1))}>
+                    «
+                </button>
+                {
+                    [...Array(totalPages)].map((_,i) => 
+                    <button
+                        key={i+1}
+                        onClick={() => setCurrentPage(i+1)}
+                        style={{
+                            backgroundColor: i + 1 === currentPage ? "#646cff" : "#fff",
+                            color: i + 1 === currentPage ? "#fff" : "#000",                            
+                        }}
+                    >
+                        {i+1}
+                    </button>)
+                }
+                <button disabled={currentPage ===totalPages} onClick={() => setCurrentPage((p) => Math.min(p+1,totalPages))}>
+                    »
+                </button>
             </div>
         </div>
     );
