@@ -1,7 +1,7 @@
 import {apiRequest} from "./base";
 
-export const getAllProducts = () => {
-    return apiRequest("/products" , {method: "GET"});
+export const getAllProducts = ({page = 1, limit = 10} = {}) => {
+    return apiRequest(`/products?page=${page}&limit=${limit}`, {method: "GET"});
 };
 
 export const getProductById = (productId) => {

@@ -27,8 +27,11 @@ export const getProductById = async (req,res) => {
 
 export const getAllProducts = async (req,res) => {
     try{
-        const products = await getAllProductsService();
-        res.status(200).json(products);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+
+        const {products, totalPages, currentPage} = await getAllProductsService({page, limit});
+        res.status(200).json({products, totalPages, currentPage});
     } catch (err){
         res.status(500).json({error: err.message});
     }

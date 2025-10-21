@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {formatPrice} from "../../utils/formatPrice";
+import {useNavigate} from "react-router-dom";
 
 export default function ProductCard({
     product,
@@ -10,6 +11,7 @@ export default function ProductCard({
 }){
     const {name, price, imageURL, stock} = product;
     const [quantity, setQuantity] = useState(1);
+    const navigate = useNavigate();
 
     const handleDecrease = () => {
         if(quantity > 1){
@@ -25,10 +27,23 @@ export default function ProductCard({
         }
     };   
 
+    const handleEdit = () => {
+        navigate(`/edit-product/${product._id}`);
+    };
+
+    const handleCardClick = (e) => {
+        if(e.target.tagName.toLowerCase() === "button") return;
+        navigate(`/product/${product._id}`);
+
+    };
+
     return (
         <div
             className = "product-card"
-            style={{}}
+            onClick={handleCardClick}
+            style={{
+                cursor: "pointer",
+            }}
         >
             <img
                 src={product.imageURL}
@@ -38,7 +53,8 @@ export default function ProductCard({
             <h3>{name}</h3>
             <p>{formatPrice(price)}</p>
 
-            <div style={{}}>
+            <div style={{}}
+            onClick={(e) => e.stopPropagation()}>
                 {isAuthenticated &&
                 (
                     <>
@@ -48,7 +64,7 @@ export default function ProductCard({
                     </>
                 )}
                 <button onClick={onAddToCart} disabled={!isAuthenticated}>Add</button>
-                {isAdmin && <button>Edit</button>}
+                {isAdmin && <button onClick={handleEdit}>Edit</button>}
             </div>
         </div>
     );

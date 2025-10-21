@@ -15,8 +15,15 @@ export const getProductById = async ({productId}) => {
     return product;
 };
 
-export const getAllProducts = async () => {
-    return await Product.find();
+export const getAllProducts = async ({page=1, limit = 10}) => {
+    const skip = (page - 1)*limit;
+    const [products, totalCount] = await Promise.all([
+        Product.find().skip(skip).limit(limit),
+        Product.countDocuments(),
+    ]);
+
+    const totalPages = Math.ceil(totalCount / limit);
+    return { products, totalPages, currentPage: page};
 };
 
 export const updateProductById = async ({userId, productId, productData}) => {
