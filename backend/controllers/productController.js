@@ -51,7 +51,7 @@ export const updateProductById = async (req,res) => {
 export const deleteProductById = async (req,res) => {
     try{
         const {productId} = req.params;
-        const product = await deleteProductByIdService({productId, userId:req.user.id});
+        const product = await deleteProductByIdService({userId:req.user.id, productId});
         res.status(200).json({
             message: "delete successfully",
             product,
