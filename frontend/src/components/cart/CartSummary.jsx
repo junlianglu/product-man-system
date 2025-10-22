@@ -7,7 +7,7 @@ import {
     selectCartFormattedTotal,
 } from '../../features/cart/cartSelectors.js';
 
-export default CartSummary = () => {
+const CartSummary = () => {
     const status = useSelector(selectCartStatus);
     const subtotal = useSelector(selectCartFormattedSubtotal);
     const discount = useSelector(selectCartFormattedDiscount);
@@ -40,4 +40,6 @@ export default CartSummary = () => {
             </div>
         </div>
     );
-}
+};
+
+export default CartSummary;

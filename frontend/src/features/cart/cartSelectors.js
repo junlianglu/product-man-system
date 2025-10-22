@@ -2,7 +2,7 @@ import { formatPrice } from "../../utils/formatPrice.js";
 
 export const selectCartItems = (state) => state.cart.items;
 
-export const selectCartItemsCount = (state) => state.cart.items.reudce((acc, item) => acc + item.quantity, 0);
+export const selectCartItemsCount = (state) => state.cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
 export const selectCartFormattedSubtotal = (state) => formatPrice(state.cart.summary?.subtotal ?? 0);
 

@@ -1,7 +1,7 @@
-export const selectAllProducts = (state) => state.product.items;
-export const selectProductTotalPages = (state) => state.product.totalPages;
-export const selectProductCurrentPage = (state) => state.product.currentPage;
+export const selectAllProducts = (state) => state.products.items;
+export const selectProductTotalPages = (state) => state.products.totalPages;
+export const selectProductCurrentPage = (state) => state.products.currentPage;
 
-export const selectProductStatus = (state) => state.product.status;
-export const selectProductError = (state) => state.product.error;
-export const selectSelectedProduct = (state) => state.product.selectedProduct;
+export const selectProductStatus = (state) => state.products.status;
+export const selectProductError = (state) => state.products.error;
+export const selectSelectedProduct = (state) => state.products.selectedProduct;

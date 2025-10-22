@@ -38,7 +38,7 @@ const cartSlice = createSlice({
                 state.summary = action.payload.summary;
             })
             .addCase(fetchCartWithSummaryThunk.rejected, (state, action) => {
-                state.statsu = 'failed';
+                state.status = 'failed';
                 state.error = action.payload;
             });
         builder
@@ -82,7 +82,7 @@ const cartSlice = createSlice({
             .addCase(applyDiscountCodeThunk.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.payload;
-            })
+            });
         builder
             .addCase(removeItemThunk.pending, (state) => {
                 state.status = 'loading';
