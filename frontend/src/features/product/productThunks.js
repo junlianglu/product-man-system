@@ -3,7 +3,7 @@ import {getAllProducts, getProductById,deleteProductById,
     updateProductById,createProduct,
 } from "../../api/products";
 
-export const fetchProducts = createAsyncThunk("product/fetchAll", 
+export const fetchProducts = createAsyncThunk("products/fetchAll", 
     async ({page = 1, limit = 10}, thunkAPI) => {
         try{
             const token = thunkAPI.getState().auth.token;
@@ -14,7 +14,7 @@ export const fetchProducts = createAsyncThunk("product/fetchAll",
         }
 });
 
-export const fetchProductById = createAsyncThunk("product/fetchById", 
+export const fetchProductById = createAsyncThunk("products/fetchById", 
     async (productId,thunkAPI) => {
         try{
             const token = thunkAPI.getState().auth.token;
@@ -25,7 +25,7 @@ export const fetchProductById = createAsyncThunk("product/fetchById",
         }
 });
 
-export const addProduct = createAsyncThunk("product/add", 
+export const addProduct = createAsyncThunk("products/add", 
     async (productData, thunkAPI) => {
         try{
             const token = thunkAPI.getState().auth.token;
@@ -36,7 +36,7 @@ export const addProduct = createAsyncThunk("product/add",
         }
 });
 
-export const editProduct = createAsyncThunk("product/edit", 
+export const editProduct = createAsyncThunk("products/edit", 
     async ({productId, productData}, thunkAPI) => {
         try{
             const token = thunkAPI.getState().auth.token;
@@ -47,7 +47,7 @@ export const editProduct = createAsyncThunk("product/edit",
         }
 });
 
-export const removeProduct = createAsyncThunk("product/remove", 
+export const removeProduct = createAsyncThunk("products/remove", 
     async (productId, thunkAPI) => {
         try{
             const token = thunkAPI.getState().auth.token;
