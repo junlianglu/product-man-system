@@ -1,11 +1,11 @@
 import {apiRequest} from "./base";
 
-export const getAllProducts = ({page = 1, limit = 10} = {}) => {
-    return apiRequest(`/products?page=${page}&limit=${limit}`, {method: "GET"});
+export const getAllProducts = (page = 1, limit = 10, token) => {
+    return apiRequest(`/products?page=${page}&limit=${limit}`, {method: "GET"}, token);
 };
 
-export const getProductById = (productId) => {
-    return apiRequest(`/products/${productId}`,{method: "GET"});
+export const getProductById = (productId, token) => {
+    return apiRequest(`/products/${productId}`,{method: "GET"}, token);
 };
 
 export const createProduct = (productData, token) => {

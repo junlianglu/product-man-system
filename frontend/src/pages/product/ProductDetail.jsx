@@ -7,7 +7,7 @@ import {fetchProductById} from "../../features/product/productThunks";
 export default function ProductDetail(){
     const {productId} = useParams();
     const dispatch = useDispatch();
-    const product = ueSelector(selectSelectedProduct);
+    const product = useSelector(selectSelectedProduct);
 
     useEffect(() => {
         dispatch(fetchProductById(productId));
@@ -23,7 +23,7 @@ export default function ProductDetail(){
                 style={{}}
             />
             <h2>{product.name}</h2>
-            <p>Discription: {product.discription}</p>
+            <p>Discription: {product.description}</p>
             <p>Category: {product.category}</p>
             <p>Stock: {product.stock}</p>
             <p>Price: ${product.price}</p>
