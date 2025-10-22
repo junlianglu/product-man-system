@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 export default function ProductForm({onSubmit, initialData = {}}){
     const [form, setForm] = useState({
@@ -12,14 +14,30 @@ export default function ProductForm({onSubmit, initialData = {}}){
 //for image upload part
     const [preview, setPreview] = useState(initialData.imageURL || "");
 
-    const handleFileUpload = (e) => {
+    const handleFileUpload = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-        const objectUrl = URL.createObjectURL(file);
-        setPreview(objectUrl);
-        setForm((prev) => ({ ...prev, imageURL: objectUrl }));
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/upload`, {
+        method: "POST",
+        body: formData,
+        });
+
+        if (!response.ok) throw new Error("Upload failed");
+
+        const data = await response.json();
+        setPreview(data.imageUrl);
+        setForm((prev) => ({ ...prev, imageURL: data.imageUrl }));
+        alert("Image uploaded successfully!");
+    } catch (err) {
+        alert(`Upload failed: ${err.message}`);
     }
     };
+
 
     const handleImageUrlChange = (e) => {
     const url = e.target.value;
