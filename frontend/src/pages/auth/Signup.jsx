@@ -1,9 +1,11 @@
-import AuthForm from "../../components/auth/AuthForm";
+import AuthForm from "../../components/auth/AuthForm.jsx";
 
-export default Signup = () => {
+const Signup = () => {
     return (
         <div>
             <AuthForm type='signup' />
         </div>
     );
 };
+
+export default Signup;

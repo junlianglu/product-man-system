@@ -1,9 +1,11 @@
-import AuthForm from "../../components/auth/AuthForm";
+import AuthForm from "../../components/auth/AuthForm.jsx";
 
-export default ResetPassword = () => {
+const ResetPassword = () => {
     return (
         <div>
             <AuthForm type='reset' />
         </div>
     );
 };
+
+export default ResetPassword;

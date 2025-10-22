@@ -22,7 +22,7 @@ export default function ProductFeed() {
     useEffect(() => {
         dispatch(fetchProducts({page: currentPage, limit: 10})).unwrap()
         .then((data) => {
-            if(totalPages)
+            if(data.totalPages)
                     setTotalPages(data.totalPages);
         }).catch(() => {});
     }, [dispatch, currentPage]);

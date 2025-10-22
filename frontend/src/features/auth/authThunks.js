@@ -15,9 +15,9 @@ export const loginThunk = createAsyncThunk(
 
 export const signupThunk = createAsyncThunk(
     'auth/signup',
-    async ({ email, password }, thunkAPI) => {
+    async ({ email, password, isAdmin }, thunkAPI) => {
         try {
-            const data = await signupUser({ email, password });
+            const data = await signupUser({ email, password, isAdmin });
             return data;
         } catch (err) {
             return thunkAPI.rejectWithValue(err.message);

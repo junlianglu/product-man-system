@@ -11,7 +11,7 @@ import {
     selectCartError
 } from "../../features/cart/cartSelectors.js";
 
-export default CartDrawer = () => {
+const CartDrawer = () => {
     const dispatch = useDispatch();
     const items = useSelector(selectCartItems);
     const itemsCount = useSelector(selectCartItemsCount);
@@ -74,4 +74,6 @@ export default CartDrawer = () => {
             }
         </div>
     );
-}
+};
+
+export default CartDrawer;

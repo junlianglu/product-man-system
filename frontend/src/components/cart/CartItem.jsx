@@ -6,7 +6,7 @@ import {
 } from '../../features/cart/cartThunks.js';
 import { formatPrice } from '../../utils/formatPrice.js';
 
-export default CartItem = ({ item }) => {
+const CartItem = ({ item }) => {
     const { product, quantity } = item;
     const [inputQuantity, setInputQuantity] = useState(quantity);
     const dispatch = useDispatch();
@@ -67,4 +67,6 @@ export default CartItem = ({ item }) => {
             </div>
         </div>
     );
-}
+};
+
+export default CartItem;

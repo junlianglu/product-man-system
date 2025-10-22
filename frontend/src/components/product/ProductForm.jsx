@@ -1,4 +1,4 @@
-import react, {useState} from "react";
+import React, {useState} from "react";
 
 export default function ProductForm({onSubmit, initialData = {}}){
     const [form, setForm] = useState({
