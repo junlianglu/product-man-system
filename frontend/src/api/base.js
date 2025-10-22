@@ -13,7 +13,7 @@ export const apiRequest = async (path, options = {}, token = null) => {
     const response = await fetch(url, config);
     if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.message);
+        throw new Error(error.error || error.msg || error.message);
     }
     return response.json();
 };

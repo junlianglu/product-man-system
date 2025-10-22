@@ -10,7 +10,7 @@ const UserIcon = () => {
 
     const handleClick = () => {
         if (isAuthenticated) {
-            dispatch(logout);
+            dispatch(logout());
         }
         navigate('/login');
     };

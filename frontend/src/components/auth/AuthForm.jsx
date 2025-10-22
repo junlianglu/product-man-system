@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import {
-    selectAuthUser,
     selectAuthIsAuthenticated,
     selectAuthStatus, 
     selectAuthError, 
@@ -14,15 +13,15 @@ import {
     resetPasswordThunk,
 } from '../../features/auth/authThunks.js';
 
-export default AuthForm = ({ type }) => {
+const AuthForm = ({ type }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const user = useSelector(selectAuthUser);
     const isAuthenticated = useSelector(selectAuthIsAuthenticated);
     const status = useSelector(selectAuthStatus);
     const error = useSelector(selectAuthError);
@@ -33,7 +32,8 @@ export default AuthForm = ({ type }) => {
         : type === 'signup' ? 'Sign up an account'
         : 'Update your password'
     );
-    const showPasswordSection = type === 'login';
+    const showPasswordSection = type === 'login' || type === 'signup';
+    const showIsAdminSection = type === 'signup';
     const showResetInstruction = type === 'reset';
     const buttonLabel = (
         type === 'login' ? 'Sign In'
@@ -45,7 +45,7 @@ export default AuthForm = ({ type }) => {
         if (isAuthenticated && (type === 'login' || type === 'signup')) {
             navigate('/');
         }
-    }, [user, type, navigate]);
+    }, [type, navigate, isAuthenticated]);
 
     useEffect(() => {
         if (type === 'reset' && successMessage) {
@@ -75,7 +75,7 @@ export default AuthForm = ({ type }) => {
         if (type === 'login') {
             dispatch(loginThunk({ email, password }));
         } else if (type === 'signup') {
-            dispatch(signupThunk({ email, password }));
+            dispatch(signupThunk({ email, password, isAdmin }));
         } else if (type === 'reset') {
             dispatch(resetPasswordThunk({ email }))
         }
@@ -95,30 +95,41 @@ export default AuthForm = ({ type }) => {
             {showResetInstruction && (
                 <h2>Enter your email link, we will send you the recovery link</h2>
             )}
-            <label>Email</label>
-            <input 
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-            />
-            {emailError && <p style={{ color: 'red'}}>{emailError}</p>}
+            <div>
+                <label>Email</label>
+                <div>
+                    <input 
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                {emailError && <p style={{ color: 'red'}}>{emailError}</p>}
+            </div>
             {showPasswordSection && (
-                <>
+                <div>
                     <label>Password</label>
                     <div>
                         <input
                             type={showPassword ? 'text' : 'password'}
+                            minLength={6}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
-                        {passwordError && <p style={{ color: 'red'}}>{passwordError}</p>}
                         <button type="button" onClick={() => setShowPassword(prev => !prev)}>
                             {showPassword ? 'Hide' : 'Show'}
                         </button>
                     </div>
-                </>
+                    {passwordError && <p style={{ color: 'red'}}>{passwordError}</p>}
+                </div>
+            )}
+            {showIsAdminSection && (
+                <div>
+                    <label>Admin?</label>
+                    <input type="checkbox" value={isAdmin} onChange={(e) => setIsAdmin(e.target.value)} />
+                </div>
             )}
             {error && !emailError && !passwordError && <p style={{ color: 'red' }}>{error}</p>}
             <button type="submit" disabled={isLoading}>
@@ -126,8 +137,8 @@ export default AuthForm = ({ type }) => {
             </button>
             {type === 'login' && (
                 <>
-                    <p>Don't have an account?<Link to='/signup'>Sign up</Link></p>
-                    <p><Link to='/reset'>Forgot password?</Link></p>
+                    <p>Don't have an account? <Link to='/signup'>Sign up</Link></p>
+                    <p><Link to='/reset-password'>Forgot password?</Link></p>
                 </>
             )}
             {type === 'signup' && (
@@ -135,4 +146,6 @@ export default AuthForm = ({ type }) => {
             )}
         </form>
     );
-}
+};
+
+export default AuthForm;

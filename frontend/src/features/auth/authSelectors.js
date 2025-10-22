@@ -10,4 +10,4 @@ export const selectAuthSuccessMessage = (state) => state.auth.successMessage;
 
 export const selectAuthIsAuthenticated = (state) => !!state.auth.token;
 
-export const selectAuthIsAdmin = (state) => state.auth.user.isAdmin;
+export const selectAuthIsAdmin = (state) => state.auth.user?.isAdmin ?? false;

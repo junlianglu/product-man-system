@@ -7,10 +7,10 @@ export const loginUser = async ({ email, password }) => {
     });
 };
 
-export const signupUser = async ({ email, password }) => {
+export const signupUser = async ({ email, password, isAdmin }) => {
     return await apiRequest('/auth/signup', {
         method: 'POST',
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, isAdmin }),
     });
 };
 

@@ -23,7 +23,7 @@ export default function ProductDetail(){
                 style={{}}
             />
             <h2>{product.name}</h2>
-            <p>Discription: {product.description}</p>
+            <p>Description: {product.description}</p>
             <p>Category: {product.category}</p>
             <p>Stock: {product.stock}</p>
             <p>Price: ${product.price}</p>

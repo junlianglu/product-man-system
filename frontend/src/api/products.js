@@ -10,7 +10,7 @@ export const getProductById = (productId, token) => {
 
 export const createProduct = (productData, token) => {
     return apiRequest(
-        "/products",
+        "/products/",
         {
             method: "POST",
             body: JSON.stringify(productData),

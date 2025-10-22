@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ProtectedRoute from './components/auth/ProtectedRoute.jsx';
+import { ProtectedRoute, AdminRoute } from './components/auth/ProtectedRoute.jsx';
 import Login from './pages/auth/Login.jsx';
 import Signup from './pages/auth/Signup.jsx';
 import ResetPassword from './pages/auth/ResetPassword.jsx';
 import Error from './pages/Error.jsx';
-import Home from './pages/Home/jsx';
+import Home from './pages/Home.jsx';
 import Navbar from './components/navbar/Navbar.jsx';
 import Footer from './pages/Footer.jsx';
 import AddProduct from './pages/product/AddProduct.jsx';
@@ -21,12 +21,16 @@ const App = () => {
         <Route path='/signup' element={<Signup />} />
         <Route path='/reset-password' element={<ResetPassword />} />
 
-        { /* Protected Routes */ }
+        { /* Protected Routes - Require Authentication */ }
         <Route element={<ProtectedRoute />}>
           <Route path='/' element={<Home />} />
+          <Route path='/product/:productId' element={<ProductDetail />} />
+        </Route>
+
+        { /* Admin Routes - Require Authentication + Admin Status */ }
+        <Route element={<AdminRoute />}>
           <Route path='/add-product' element={<AddProduct />} />
           <Route path='/edit-product/:productId' element={<EditProduct />} />
-          <Route path='/product/:productId' element={<ProductDetail />} />
         </Route>
 
         <Route path='*' element={<Error />} />
