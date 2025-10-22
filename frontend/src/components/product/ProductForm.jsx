@@ -9,6 +9,24 @@ export default function ProductForm({onSubmit, initialData = {}}){
         stock: initialData.stock || 0,
         imageURL: initialData.imageURL || "",
     });
+//for image upload part
+    const [preview, setPreview] = useState(initialData.imageURL || "");
+
+    const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        const objectUrl = URL.createObjectURL(file);
+        setPreview(objectUrl);
+        setForm((prev) => ({ ...prev, imageURL: objectUrl }));
+    }
+    };
+
+    const handleImageUrlChange = (e) => {
+    const url = e.target.value;
+    setForm((prev) => ({ ...prev, imageURL: url }));
+    setPreview(url);
+    };
+//******************* 
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -16,25 +34,101 @@ export default function ProductForm({onSubmit, initialData = {}}){
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault();   
         onSubmit(form);
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            {Object.keys(form).map((key) => (
-                <div key={key} style={{}}>
+            {Object.keys(form).filter((key) => key !== "imageURL").map((key) => (
+                <div key={key} style={{
+
+                }}>
                     <label>
-                        {key}:{" "}
+                        {"product "}{key}:{" "}
+                    {key === "category" ? (
+                        <select
+                            name="category"
+                            value={form.category}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="electronics">Electronics</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="books">Books</option>
+                            <option value="beauty">Beauty</option>
+                            <option value="home">Home</option>
+                            <option value="sports">Sports</option>
+                        </select>
+                    ): key === "price" ? (
+                        <input
+                            type="number"
+                            name="price"
+                            value={form.price}
+                            onChange={handleChange}
+                            min="0"
+                            step="0.01"
+                            required
+                        />
+                    ) : key === "stock" ? (
+                        <input
+                            type="number"
+                            name="stock"
+                            value={form.stock}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                if (/^\d*$/.test(value)) {
+                                    setForm((prev) => ({ ...prev, stock: value }));
+                                }
+                            }}
+                            min="0"
+                            step="1"
+                            required
+                        />
+                    ) : (                        
+                        
                         <input
                             name={key}
                             value={form[key]}
                             onChange={handleChange}
                             required
                         />
+                    )}
                     </label>
                 </div>
             ))}
+
+            <label>Image URL:</label>
+            <div style={{ display: "flex", alignItems: "center"}}>
+            <input
+                type="text" placeholder="http://" value={form.imageURL} onChange={handleImageUrlChange}
+                style={{}}
+            />
+            <button type="button" onClick={() => document.getElementById("fileInput").click()}>
+                Upload
+            </button>
+            <input
+                id="fileInput"
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleFileUpload}
+            />
+            </div>
+
+            <div
+            style={{
+                border: "dashed", width: "200px", height: "200px", display: "flex", alignItems: "center",
+                justifyContent: "center", flexDirection: "column",
+            }}
+            >
+            { preview ? (
+                <img src={preview} alt="Preview" style={{ maxWidth: "100%", maxHeight: "100%" }} />
+            ) : ( <p>image preview!</p>)
+            }
+            </div>
+
+
             <button type="submit">Save Product</button>
         </form>
     );
