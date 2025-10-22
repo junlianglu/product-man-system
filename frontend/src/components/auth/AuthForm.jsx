@@ -12,6 +12,7 @@ import {
     signupThunk, 
     resetPasswordThunk,
 } from '../../features/auth/authThunks.js';
+import { clearMessages } from '../../features/auth/authSlice.js';
 
 const AuthForm = ({ type }) => {
     const [email, setEmail] = useState('');
@@ -42,6 +43,10 @@ const AuthForm = ({ type }) => {
     );
 
     useEffect(() => {
+        dispatch(clearMessages());
+    }, [dispatch]);
+
+    useEffect(() => {
         if (isAuthenticated && (type === 'login' || type === 'signup')) {
             navigate('/');
         }
@@ -49,7 +54,7 @@ const AuthForm = ({ type }) => {
 
     useEffect(() => {
         if (type === 'reset' && successMessage) {
-            setTimeout(() => navigate('/login'), 2000);
+            setTimeout(() => navigate('/login'), 5000);
         }
     }, [type, successMessage, navigate]);
 
@@ -93,7 +98,7 @@ const AuthForm = ({ type }) => {
         <form onSubmit={(e) => handleSubmit(e)}>
             <h1>{heading}</h1>
             {showResetInstruction && (
-                <h2>Enter your email link, we will send you the recovery link</h2>
+                <h2>Enter your email address, we will send you the recovery link</h2>
             )}
             <div>
                 <label>Email</label>
@@ -128,7 +133,7 @@ const AuthForm = ({ type }) => {
             {showIsAdminSection && (
                 <div>
                     <label>Admin?</label>
-                    <input type="checkbox" value={isAdmin} onChange={(e) => setIsAdmin(e.target.value)} />
+                    <input type="checkbox" value={isAdmin} onChange={(e) => setIsAdmin(e.target.checked)} />
                 </div>
             )}
             {error && !emailError && !passwordError && <p style={{ color: 'red' }}>{error}</p>}
@@ -142,7 +147,7 @@ const AuthForm = ({ type }) => {
                 </>
             )}
             {type === 'signup' && (
-                <p>Already have an account <Link to='/login'>Sign in</Link></p>
+                <p>Already have an account? <Link to='/login'>Sign in</Link></p>
             )}
         </form>
     );

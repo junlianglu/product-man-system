@@ -1,5 +1,7 @@
 import { formatPrice } from "../../utils/formatPrice.js";
 
+export const selectCartIsOpen = (state) => state.cart.isCartOpen;
+
 export const selectCartItems = (state) => state.cart.items;
 
 export const selectCartItemsCount = (state) => state.cart.items.reduce((acc, item) => acc + item.quantity, 0);
