@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { editProduct,fetchProductById } from "../../features/product/productThunks";
 import {selectProductStatus, selectSelectedProduct} from "../../features/product/productSelectors";
 import ProductForm from "../../components/product/ProductForm";
-import {selectAuthToken} from "../../features/auth/authSelectors";
+
 
 export default function EditProduct(){
     const dispatch = useDispatch();
@@ -16,9 +16,9 @@ export default function EditProduct(){
         dispatch(fetchProductById(productId));
     }, [dispatch, productId]);
 
-    const token = useSelector(selectAuthToken);
     const handleSubmit = (data) => {
-        dispatch(editProduct({productId: product._id, productData: data, token}));       
+        if(!product) return;
+        dispatch(editProduct({productId: product._id, productData: data}));       
     };
 
     if (status === "loading") return <p>Loading product...</p>;
