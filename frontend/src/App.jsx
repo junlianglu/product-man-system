@@ -10,11 +10,13 @@ import Footer from './pages/Footer.jsx';
 import AddProduct from './pages/product/AddProduct.jsx';
 import EditProduct from './pages/product/EditProduct.jsx';
 import ProductDetail from './pages/product/ProductDetail.jsx';
+import CartDrawer from './components/cart/CartDrawer.jsx';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Navbar />
+      <CartDrawer />
       <Routes>
         { /* Public Routes */ }
         <Route path='/login' element={<Login />} />
