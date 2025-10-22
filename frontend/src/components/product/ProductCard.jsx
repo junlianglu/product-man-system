@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import {formatPrice} from "../../utils/formatPrice";
 import {useNavigate} from "react-router-dom";
 
@@ -46,8 +46,8 @@ export default function ProductCard({
             }}
         >
             <img
-                src={product.imageURL}
-                alt={product.name}
+                src={imageURL}
+                alt={name}
                 style={{}}
             />
             <h3>{name}</h3>
