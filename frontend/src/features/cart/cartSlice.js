@@ -6,6 +6,7 @@ import {
     applyDiscountCodeThunk,
     removeItemThunk,
 } from './cartThunks';
+import { logout } from '../auth/authSlice.js';
 
 const initialState = {
     items: [],
@@ -57,46 +58,39 @@ const cartSlice = createSlice({
             });
         builder
             .addCase(updateItemQuantityThunk.pending, (state) => {
-                state.status = 'loading';
                 state.error = null;
             })
             .addCase(updateItemQuantityThunk.fulfilled, (state, action) => {
-                state.status = 'succeeded';
                 state.items = action.payload.cart.items;
                 state.summary = action.payload.summary;
             })
             .addCase(updateItemQuantityThunk.rejected, (state, action) => {
-                state.status = 'failed';
                 state.error = action.payload;
             });
         builder
             .addCase(applyDiscountCodeThunk.pending, (state) => {
-                state.status = 'loading';
                 state.error = null;
             })
             .addCase(applyDiscountCodeThunk.fulfilled, (state, action) => {
-                state.status = 'succeeded';
                 state.items = action.payload.cart.items;
                 state.summary = action.payload.summary;
             })
             .addCase(applyDiscountCodeThunk.rejected, (state, action) => {
-                state.status = 'failed';
                 state.error = action.payload;
             });
         builder
             .addCase(removeItemThunk.pending, (state) => {
-                state.status = 'loading';
                 state.error = null;
             })
             .addCase(removeItemThunk.fulfilled, (state, action) => {
-                state.status = 'succeeded';
                 state.items = action.payload.cart.items;
                 state.summary = action.payload.summary;
             })
             .addCase(removeItemThunk.rejected, (state, action) => {
-                state.status = 'failed';
                 state.error = action.payload;
             });
+        builder
+            .addCase(logout, () => initialState);
     }
 });
 
