@@ -1,0 +1,114 @@
+.feedContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feedHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.feedHeader h2 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.sortControls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sortSelect {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.addButton {
+  background-color: #646cff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.addButton:hover {
+  background-color: #4b51e2;
+  transform: translateY(-1px);
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+  gap: 24px;                     
+  justify-items: stretch;        
+  align-items: start;            
+  margin-top: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.pageButton {
+  border: 1px solid #ccc;
+  background-color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.pageButton:hover {
+  background-color: #f3f3f3;
+}
+
+.activePage {
+  background-color: #646cff;
+  color: white;
+  border-color: #646cff;
+}
+
+@media (max-width: 768px) {
+  .feedContainer {
+    padding: 16px;
+  }
+
+  .feedHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .productGrid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .addButton {
+    width: 100%;
+    text-align: center;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+  }
+}

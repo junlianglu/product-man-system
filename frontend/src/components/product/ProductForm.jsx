@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import styles from "./ProductForm.module.css";
 
 
 export default function ProductForm({onSubmit, initialData = {}}){
@@ -57,12 +58,10 @@ export default function ProductForm({onSubmit, initialData = {}}){
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.formContainer}>
             {Object.keys(form).filter((key) => key !== "imageURL").map((key) => (
-                <div key={key} style={{
-
-                }}>
-                    <label>
+                <div key={key} className={styles.field}>
+                    <label className={styles.label}>
                         {"product "}{key}:{" "}
                     {key === "category" ? (
                         <select
@@ -70,6 +69,7 @@ export default function ProductForm({onSubmit, initialData = {}}){
                             value={form.category}
                             onChange={handleChange}
                             required
+                            className={styles.select}
                         >
                             <option value="electronics">Electronics</option>
                             <option value="clothing">Clothing</option>
@@ -87,6 +87,7 @@ export default function ProductForm({onSubmit, initialData = {}}){
                             min="0"
                             step="0.01"
                             required
+                            className={styles.input}
                         />
                     ) : key === "stock" ? (
                         <input
@@ -102,6 +103,7 @@ export default function ProductForm({onSubmit, initialData = {}}){
                             min="0"
                             step="1"
                             required
+                            className={styles.input}
                         />
                     ) : (                        
                         
@@ -110,44 +112,43 @@ export default function ProductForm({onSubmit, initialData = {}}){
                             value={form[key]}
                             onChange={handleChange}
                             required
+                            className={styles.input}
                         />
                     )}
                     </label>
                 </div>
             ))}
+            <div className={styles.field}>
+                <label className={styles.label}>Image URL:</label>
+                <div className={styles.imageUploadContainer}>
+                    <input
+                        type="text" placeholder="http://" value={form.imageURL} onChange={handleImageUrlChange}
+                        className={styles.input}
+                    />
+                    <button type="button" 
+                    className={styles.uploadButton}
+                    onClick={() => document.getElementById("fileInput").click()}>
+                        Upload
+                    </button>
+                    <input
+                        id="fileInput"
+                        type="file"
+                        accept="image/*"
+                        style={{ display: "none" }}
+                        onChange={handleFileUpload}
+                    />
+                </div>
 
-            <label>Image URL:</label>
-            <div style={{ display: "flex", alignItems: "center"}}>
-            <input
-                type="text" placeholder="http://" value={form.imageURL} onChange={handleImageUrlChange}
-                style={{}}
-            />
-            <button type="button" onClick={() => document.getElementById("fileInput").click()}>
-                Upload
-            </button>
-            <input
-                id="fileInput"
-                type="file"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={handleFileUpload}
-            />
+                <div className={styles.imagePreview}>
+                { preview ? (
+                    <img src={preview} alt="Preview" style={{ maxWidth: "100%", maxHeight: "100%" }} />
+                ) : ( <p>image preview!</p>)
+                }
+                </div>
             </div>
 
-            <div
-            style={{
-                border: "dashed", width: "200px", height: "200px", display: "flex", alignItems: "center",
-                justifyContent: "center", flexDirection: "column",
-            }}
-            >
-            { preview ? (
-                <img src={preview} alt="Preview" style={{ maxWidth: "100%", maxHeight: "100%" }} />
-            ) : ( <p>image preview!</p>)
-            }
-            </div>
 
-
-            <button type="submit">Save Product</button>
+            <button type="submit" className={styles.submitButton}>Save Product</button>
         </form>
     );
 }

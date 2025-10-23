@@ -6,6 +6,7 @@ import {fetchProductById} from "../../features/product/productThunks";
 import {addToCartThunk,updateItemQuantityThunk} from "../../features/cart/cartThunks";
 import {selectAuthIsAdmin,selectAuthIsAuthenticated} from "../../features/auth/authSelectors";
 import ProductActions from "../../components/product/ProductActions";
+import styles from "./ProductDetail.module.css";
 
 export default function ProductDetail(){
     const {productId} = useParams();
@@ -36,13 +37,13 @@ export default function ProductDetail(){
 
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <img src={product.imageURL} alt={product.name} style={{}} />
-      <h2>{product.name}</h2>
-      <p>Description: {product.description}</p>
-      <p>Category: {product.category}</p>
-      <p>Stock: {product.stock}</p>
-      <p>Price: ${product.price}</p>
+    <div className={styles.container}>
+      <img src={product.imageURL} alt={product.name} className={styles.image} />
+      <h2 ame={styles.title}>{product.name}</h2>
+      <p className={styles.details}>Description: {product.description}</p>
+      <p className={styles.details}>Category: {product.category}</p>
+      <p className={styles.details}>Stock: {product.stock}</p>
+      <p className={styles.price}>Price: ${product.price}</p>
 
       <ProductActions
         product={product}

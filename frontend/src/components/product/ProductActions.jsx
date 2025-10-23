@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectCartItems } from "../../features/cart/cartSelectors";
+import styles from "./ProductActions.module.css";
 
 export default function ProductActions({
     product,
@@ -51,21 +52,21 @@ export default function ProductActions({
     };
 
     return (
-        <div style={{ marginTop: "8px" }} onClick={(e) => e.stopPropagation()}>
+        <div className={styles.actionsContainer} onClick={(e) => e.stopPropagation()}>
         {isAuthenticated && quantity > 0 ? (
             <>
-            <button onClick={handleDecrease}>-</button>
-            <span style={{ margin: "0 8px" }}>{quantity}</span>
-            <button onClick={handleIncrease} disabled={quantity >= stock}>
+            <button className={styles.button} onClick={handleDecrease}>-</button>
+            <span className={styles.quantity}>{quantity}</span>
+            <button className={styles.button} onClick={handleIncrease} disabled={quantity >= stock}>
                 +
             </button>
             </>
         ) : (
-            isAuthenticated && <button onClick={handleAdd}>Add</button>
+            isAuthenticated && <button className={styles.button} onClick={handleAdd}>Add</button>
         )}
 
         {isAdmin && (
-            <button style={{ marginLeft: "10px" }} onClick={onEdit}>
+            <button className={`${styles.button} ${styles.editButton}`} onClick={onEdit}>
             Edit
             </button>
         )}

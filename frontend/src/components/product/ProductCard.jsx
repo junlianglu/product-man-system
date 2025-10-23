@@ -2,6 +2,7 @@ import React from "react";
 import {formatPrice} from "../../utils/formatPrice";
 import {useNavigate} from "react-router-dom";
 import ProductActions from "./ProductActions";
+import styles from "./ProductCard.module.css";
 
 
 export default function ProductCard({
@@ -27,19 +28,16 @@ export default function ProductCard({
 
     return (
         <div
-            className = "product-card"
+            className={styles.card}
             onClick={handleCardClick}
-            style={{
-                cursor: "pointer",
-            }}
         >
             <img
                 src={imageURL}
                 alt={name}
-                style={{objectFit: "cover",}}
+                className={styles.image}
             />
-            <h3>{name}</h3>
-            <p>{formatPrice(price)}</p>
+            <h3 className={styles.name}>{name}</h3>
+            <p className={styles.price}>{formatPrice(price)}</p>
 
             <ProductActions
                 product={product}
