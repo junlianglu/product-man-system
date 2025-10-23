@@ -1,5 +1,10 @@
 .authContainer {
-    max-width: 400px;
+    width: 100%;
+    max-width: 500px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin: 0 auto;
     padding: 2rem;
     background-color: #ffffff;
@@ -14,7 +19,7 @@
 }
 
 .resetInstruction {
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     margin-bottom: 1rem;
     text-align: center;
 }

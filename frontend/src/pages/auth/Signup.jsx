@@ -2,7 +2,7 @@ import AuthForm from "../../components/auth/AuthForm.jsx";
 
 const Signup = () => {
     return (
-        <div>
+        <div className="auth-page">
             <AuthForm type='signup' />
         </div>
     );
