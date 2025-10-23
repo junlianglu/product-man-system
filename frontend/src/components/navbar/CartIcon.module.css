@@ -1,0 +1,51 @@
+.cartButton {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1rem;
+}
+  
+.cartIcon {
+    font-size: 1.5rem;
+}
+  
+.itemCount {
+    position: absolute;
+    top: -6px;
+    left: 16px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+  
+.total {
+    font-size: 0.9rem;
+    color: #ddd;
+}
+  
+@media (max-width: 600px) {
+    .cartButton {
+      font-size: 0.9rem;
+    }
+  
+    .cartIcon {
+      font-size: 1.3rem;
+    }
+  
+    .total {
+      display: none;
+    }
+}
+  
