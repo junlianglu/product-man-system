@@ -13,6 +13,7 @@ import {
     resetPasswordThunk,
 } from '../../features/auth/authThunks.js';
 import { clearMessages } from '../../features/auth/authSlice.js';
+import styles from './AuthForm.module.css';
 
 const AuthForm = ({ type }) => {
     const [email, setEmail] = useState('');
@@ -88,66 +89,73 @@ const AuthForm = ({ type }) => {
 
     if (type === 'reset' && successMessage) {
         return (
-            <div>
+            <div className={styles.resetSuccess}>
+                <h2>Password Reset Email Sent</h2>
                 <p>{successMessage}</p>
+                <p>Redirecting to login page...</p>
             </div>
         );
     }
+    
 
     return (
-        <form onSubmit={(e) => handleSubmit(e)}>
-            <h1>{heading}</h1>
+        <form onSubmit={(e) => handleSubmit(e)} className={styles.authContainer}>
+            <h1 className={styles.heading}>{heading}</h1>
             {showResetInstruction && (
-                <h2>Enter your email address, we will send you the recovery link</h2>
+                <h2 className={styles.resetInstruction}>Enter your email address, we will send you the recovery link</h2>
             )}
-            <div>
-                <label>Email</label>
-                <div>
+            <div className={styles.inputGroup}>
+                <label className={styles.label}>Email</label>
+                <div className={styles.inputWrapper}>
                     <input 
+                        className={styles.input}
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
-                {emailError && <p style={{ color: 'red'}}>{emailError}</p>}
+                {emailError && <p className={styles.errorText}>{emailError}</p>}
             </div>
             {showPasswordSection && (
-                <div>
-                    <label>Password</label>
-                    <div>
+                <div className={styles.inputGroup}>
+                    <label className={styles.label}>Password</label>
+                    <div className={styles.inputWrapper}>
                         <input
-                            type={showPassword ? 'text' : 'password'}
-                            minLength={6}
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
+                        className={styles.input}
+                        type={showPassword ? 'text' : 'password'}
+                        minLength={6}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
                         />
-                        <button type="button" onClick={() => setShowPassword(prev => !prev)}>
+                        <button type="button" className={styles.showPasswordBtn} onClick={() => setShowPassword(prev => !prev)}>
                             {showPassword ? 'Hide' : 'Show'}
                         </button>
                     </div>
-                    {passwordError && <p style={{ color: 'red'}}>{passwordError}</p>}
+                    {passwordError && <p className={styles.errorText}>{passwordError}</p>}
                 </div>
             )}
             {showIsAdminSection && (
-                <div>
-                    <label>Admin?</label>
-                    <input type="checkbox" value={isAdmin} onChange={(e) => setIsAdmin(e.target.checked)} />
+                <div className={styles.inputGroup}>
+                    <label className={styles.label}>Admin?</label>
+                    <input className={styles.checkbox} type="checkbox" value={isAdmin} onChange={(e) => setIsAdmin(e.target.checked)} />
                 </div>
             )}
-            {error && !emailError && !passwordError && <p style={{ color: 'red' }}>{error}</p>}
-            <button type="submit" disabled={isLoading}>
-                {isLoading ? 'Submitting...' : buttonLabel}
+            {error && !emailError && !passwordError && <p className={styles.errorText}>{error}</p>}
+            <button type="submit" disabled={isLoading} className={styles.submitButton}>
+                {isLoading ? <span className={styles.loadingText}>Submitting...</span> : <span className={styles.buttonText}>{buttonLabel}</span>}
             </button>
             {type === 'login' && (
-                <>
-                    <p>Don't have an account? <Link to='/signup'>Sign up</Link></p>
-                    <p><Link to='/reset-password'>Forgot password?</Link></p>
-                </>
+                <div className={styles.linkGroup}>
+                    <p className={styles.link}>Don't have an account? <Link to='/signup'>Sign up</Link></p>
+                    <p className={styles.link}><Link to='/reset-password'>Forgot password?</Link></p>
+                </div>
             )}
             {type === 'signup' && (
-                <p>Already have an account? <Link to='/login'>Sign in</Link></p>
+                <div className={styles.linkGroup}>
+                    <p className={styles.link}>Already have an account? <Link to='/login'>Sign in</Link></p>
+                </div>
             )}
         </form>
     );

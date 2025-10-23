@@ -1,0 +1,77 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #282c34;
+    color: white;
+    flex-wrap: wrap;
+}
+  
+.navbarTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
+}
+  
+.navbarIcons {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+  
+.userIconContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+  
+.userIconButton {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+  
+.cartButton {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+  
+.cartBadge {
+    background-color: red;
+    color: white;
+    border-radius: 999px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+.cartIcon {
+    font-size: 1.2rem;
+}
+
+.userIcon {
+    font-size: 1.2rem;
+}
+  
+@media (max-width: 600px) {
+    .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+  
+    .navbarIcons {
+      justify-content: space-between;
+      width: 100%;
+    }
+}
+  
