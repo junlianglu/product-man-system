@@ -6,6 +6,7 @@ import ProductCard from "../../components/product/ProductCard";
 import {selectAuthIsAdmin,selectAuthIsAuthenticated} from "../../features/auth/authSelectors";
 import {addToCartThunk,updateItemQuantityThunk} from "../../features/cart/cartThunks";
 import {useNavigate} from "react-router-dom";
+import styles from "./ProductFeed.module.css";
 
 export default function ProductFeed() {
     const dispatch = useDispatch();
@@ -49,13 +50,14 @@ export default function ProductFeed() {
     if(status === "loading") return <p>Loading products...</p>;
     if(status === "failed") return <p>Error loading products.</p>;
     return (
-        <div>
-            <div className="feed-header" style={{}}>
+        <div className={styles.feedContainer}>
+            <div className={styles.feedHeader}>
                 <h2>Products</h2>
-                <div>
+                <div className={styles.sortControls}>
                     <select
                         value={sortOption}
                         onChange={(e) => setSortOption(e.target.value)}
+                        className={styles.sortSelect}
                     >
                         <option value="lastAdded">Last Added</option>
                         <option value="priceLowToHigh">Price: low to high</option>
@@ -63,14 +65,14 @@ export default function ProductFeed() {
                     </select>
                     {isAdmin && 
                     <button 
-                        className="btn-add-product"
+                        className={styles.addButton}
                         onClick={() => navigate("/add-product")}
                     >Add product
                     </button>}
                 </div>
             </div>
 
-            <div style={{}}>
+            <div className={styles.productGrid}>
                 {sortedProducts.map((p) => (
                     <ProductCard 
                      key={p._id}
@@ -83,24 +85,27 @@ export default function ProductFeed() {
                 ))}
             </div>
 
-            <div style={{}}>
-                <button disabled={currentPage ===1} onClick={() => setCurrentPage((p) => Math.max(p-1,1))}>
+            <div className={styles.pagination}>
+                <button className={styles.pageButton} 
+                    disabled={currentPage ===1} 
+                    onClick={() => setCurrentPage((p) => Math.max(p-1,1))}>
                     «
                 </button>
                 {
                     [...Array(totalPages)].map((_,i) => 
                     <button
                         key={i+1}
+                        className={`${styles.pageButton} ${
+                        i + 1 === currentPage ? styles.activePage : ""
+                        }`}
                         onClick={() => setCurrentPage(i+1)}
-                        style={{
-                            backgroundColor: i + 1 === currentPage ? "#646cff" : "#fff",
-                            color: i + 1 === currentPage ? "#fff" : "#000",                            
-                        }}
                     >
                         {i+1}
                     </button>)
                 }
-                <button disabled={currentPage ===totalPages} onClick={() => setCurrentPage((p) => Math.min(p+1,totalPages))}>
+                <button className={styles.pageButton}
+                    disabled={currentPage ===totalPages} 
+                    onClick={() => setCurrentPage((p) => Math.min(p+1,totalPages))}>
                     »
                 </button>
             </div>
