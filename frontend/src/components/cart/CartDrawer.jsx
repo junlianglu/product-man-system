@@ -12,6 +12,7 @@ import {
     selectCartIsOpen
 } from "../../features/cart/cartSelectors.js";
 import { selectAuthIsAuthenticated } from "../../features/auth/authSelectors.js";
+import styles from './CartDrawer.module.css';
 
 const CartDrawer = () => {
     const dispatch = useDispatch();
@@ -55,20 +56,24 @@ const CartDrawer = () => {
     };
 
     return (
-        <div onClick={handleOverlayClick}>
-            <div onClick={handleDrawerClick}>
+        <div className={styles.overlay} onClick={handleOverlayClick}>
+            <div className={styles.drawer} onClick={handleDrawerClick}>
                 {status === 'loading' ? <p>Loading Cart...</p>
-                    : items.length === 0 ? <p>Your cart is empty.</p>
+                    : items.length === 0 ? (
+                        <div className={styles.emptyCartMessage}>
+                            🛒 Your cart is empty.
+                        </div>
+                    )
                     : (
                         <>
-                            <div>
+                            <div className={styles.drawerHeader}>
                                 <h2>Cart ({itemsCount})</h2>
                                 <button onClick={handleClose}>x</button>
                             </div>
                             <div>
                                 {items.map(item => <CartItem key={item.product._id} item={item} />)}
                             </div>
-                            <div>
+                            <div className={styles.discountSection}>
                                 <label>Apply Discount Code</label>
                                 <input
                                     type="text"
@@ -76,20 +81,20 @@ const CartDrawer = () => {
                                     value={inputDiscountCode}
                                     onChange={(e) => setInputDiscountCode(e.target.value)}
                                 />
-                                {localError && <p style={{ color: 'red' }}>{localError}</p>}
+                                {localError && <p className={styles.errorText}>{localError}</p>}
                                 {error && submittedDiscountCode 
-                                    && (<p style={{ color: 'red' }}>
+                                    && (<p className={styles.errorText}>
                                             Discount code "{submittedDiscountCode}" is invalid.
                                         </p>)
                                 }
                                 <button onClick={handleApplyDiscountCode}>Apply</button>
                             </div>
                             <CartSummary />
-                            {error && (<p style={{ color: 'red' }}>
-                                            error.message || error.error || error.err
+                            {error && (<p className={styles.errorText}>
+                                            {error.message || error.error || error.err}
                                         </p>)
                             }
-                            <button>Continue to checkout</button>
+                            <button className={styles.checkoutButton}>Continue to checkout</button>
                         </>
                     )
                 }
