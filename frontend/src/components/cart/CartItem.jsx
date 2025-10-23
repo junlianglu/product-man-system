@@ -25,19 +25,25 @@ const CartItem = ({ item }) => {
     };
     
     const handleIncrement = () => {
-        const newQuantity = quantity + 1;
-        if (newQuantity <= product.stock) {
-            setInputQuantity(newQuantity);
-            dispatch(updateItemQuantityThunk({ productId: product._id, quantity: newQuantity }));
-        }
+        setInputQuantity(prev => {
+            const newQuantity = prev + 1;
+            if (newQuantity <= product.stock) {
+                dispatch(updateItemQuantityThunk({ productId: product._id, quantity: newQuantity }));
+                return newQuantity;
+            }
+            return prev;
+        });
     };
 
     const handleDecrement = () => {
-        const newQuantity = quantity - 1;
-        if (newQuantity >= 1) {
-            setInputQuantity(newQuantity);
-            dispatch(updateItemQuantityThunk({ productId: product._id, quantity: newQuantity }));
-        }
+        setInputQuantity(prev => {
+            const newQuantity = prev - 1;
+            if (newQuantity >= 1) {
+                dispatch(updateItemQuantityThunk({ productId: product._id, quantity: newQuantity }));
+                return newQuantity;
+            }
+            return prev;
+        });
     };
 
     const handleRemove = () => {
