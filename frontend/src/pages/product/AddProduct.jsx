@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../features/product/productThunks";
 import ProductForm from "../../components/product/ProductForm";
 import { useNavigate} from "react-router-dom";
+import styles from "./styles/AddProduct.module.css";
 
 
 export default function AddProduct() {
@@ -10,7 +11,7 @@ export default function AddProduct() {
     const navigate = useNavigate();
     const handleSubmit = async (data) => {
         try{
-            await dispatch(addProduct(data)).unwrap;
+            await dispatch(addProduct(data)).unwrap();
             alert("Product added successfully!");
             navigate("/");  
         } catch{
@@ -19,9 +20,11 @@ export default function AddProduct() {
     };
 
     return (
-        <div>
-            <h2>Add product</h2>
-            <ProductForm onSubmit={handleSubmit}/>
+        <div className={styles.pageWrapper}>
+            <h1 className={styles.pageTitle}>Add product</h1>
+            <div className={styles.formContainer}>
+                <ProductForm onSubmit={handleSubmit}/>
+            </div>
         </div>
     );
 }
