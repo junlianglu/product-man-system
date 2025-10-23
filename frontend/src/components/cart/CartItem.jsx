@@ -5,6 +5,7 @@ import {
     removeItemThunk,
 } from '../../features/cart/cartThunks.js';
 import { formatPrice } from '../../utils/formatPrice.js';
+import styles from './CartDrawer.module.css';
 
 const CartItem = ({ item }) => {
     const { product, quantity } = item;
@@ -51,12 +52,12 @@ const CartItem = ({ item }) => {
     };
 
     return (
-        <div>
-            <div>
-                <img src={product.imageURL} alt={product.name} />
+        <div className={styles.cartItem}>
+            <img src={product.imageURL} alt={product.name} />
+            <div style={{ flexGrow: 1 }}>
                 <h4>{product.name}</h4>
                 <p>{formatPrice(product.price * quantity)}</p>
-                <div>
+                <div className={styles.quantityControls}>
                     <button onClick={handleDecrement} disabled={inputQuantity <= 1}>-</button>
                     <input
                         type="number"
@@ -69,8 +70,8 @@ const CartItem = ({ item }) => {
                     />
                     <button onClick={handleIncrement} disabled={inputQuantity >= product.stock}>+</button>
                 </div>
-                <button onClick={handleRemove}>Remove</button>
             </div>
+            <button className={styles.removeButton} onClick={handleRemove}>Remove</button>
         </div>
     );
 };

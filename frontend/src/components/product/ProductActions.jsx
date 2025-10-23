@@ -18,6 +18,10 @@ export default function ProductActions({
     const [isLocalChange, setIsLocalChange] = useState(false);// avoid quantity shwing problem "wait"
 
     useEffect(() => {
+        if (!existingCartItem && quantity > 0) {
+            setQuantity(0);
+            setIsLocalChange(false);
+        }
         if (!isLocalChange) {
             if (existingCartItem) {
                 setQuantity(existingCartItem.quantity);
@@ -25,7 +29,7 @@ export default function ProductActions({
                 setQuantity(0);
             }
         }
-    }, [existingCartItem]);
+    }, [existingCartItem, isLocalChange]);
 
     const handleDecrease = () => {
         if (quantity > 0) {
