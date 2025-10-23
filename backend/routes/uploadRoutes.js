@@ -17,7 +17,6 @@ const upload = multer({ storage });
 
 
 router.post("/", upload.single("image"), (req, res) => {
-    console.log("here");
   if (!req.file) return res.status(400).json({ error: "No file uploaded" });
   const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
   res.status(200).json({ imageUrl });
