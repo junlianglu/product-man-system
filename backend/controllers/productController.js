@@ -29,8 +29,9 @@ export const getAllProducts = async (req,res) => {
     try{
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
+        const search = req.query.search || "";
 
-        const {products, totalPages, currentPage} = await getAllProductsService({page, limit});
+        const {products, totalPages, currentPage} = await getAllProductsService({page, limit, search});
         res.status(200).json({products, totalPages, currentPage});
     } catch (err){
         res.status(500).json({error: err.message});
