@@ -18,26 +18,28 @@ const App = () => {
     <BrowserRouter>
       <Navbar />
       <CartDrawer />
-      <Routes>
-        { /* Public Routes */ }
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
+      <main>
+        <Routes>
+          { /* Public Routes */ }
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
 
-        { /* Protected Routes - Require Authentication */ }
-        <Route element={<ProtectedRoute />}>
-          <Route path='/' element={<Home />} />
-          <Route path='/product/:productId' element={<ProductDetail />} />
-        </Route>
+          { /* Protected Routes - Require Authentication */ }
+          <Route element={<ProtectedRoute />}>
+            <Route path='/' element={<Home />} />
+            <Route path='/product/:productId' element={<ProductDetail />} />
+          </Route>
 
-        { /* Admin Routes - Require Authentication + Admin Status */ }
-        <Route element={<AdminRoute />}>
-          <Route path='/add-product' element={<AddProduct />} />
-          <Route path='/edit-product/:productId' element={<EditProduct />} />
-        </Route>
+          { /* Admin Routes - Require Authentication + Admin Status */ }
+          <Route element={<AdminRoute />}>
+            <Route path='/add-product' element={<AddProduct />} />
+            <Route path='/edit-product/:productId' element={<EditProduct />} />
+          </Route>
 
-        <Route path='*' element={<Error />} />
-      </Routes>
+          <Route path='*' element={<Error />} />
+        </Routes>
+      </main>
       <Footer />
     </BrowserRouter>
   );

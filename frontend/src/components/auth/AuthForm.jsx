@@ -102,7 +102,7 @@ const AuthForm = ({ type }) => {
         <form onSubmit={(e) => handleSubmit(e)} className={styles.authContainer}>
             <h1 className={styles.heading}>{heading}</h1>
             {showResetInstruction && (
-                <h2 className={styles.resetInstruction}>Enter your email address, we will send you the recovery link</h2>
+                <p className={styles.resetInstruction}>Enter your email address, we will send you the recovery link</p>
             )}
             <div className={styles.inputGroup}>
                 <label className={styles.label}>Email</label>

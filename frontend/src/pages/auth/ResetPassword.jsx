@@ -2,7 +2,7 @@ import AuthForm from "../../components/auth/AuthForm.jsx";
 
 const ResetPassword = () => {
     return (
-        <div>
+        <div className="auth-page">
             <AuthForm type='reset' />
         </div>
     );
