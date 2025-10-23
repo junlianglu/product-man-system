@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-import styles from "./ProductForm.module.css";
+import styles from "./styles/ProductForm.module.css";
 
 
 export default function ProductForm({onSubmit, initialData = {}}){

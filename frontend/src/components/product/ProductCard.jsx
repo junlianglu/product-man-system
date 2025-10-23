@@ -2,7 +2,7 @@ import React from "react";
 import {formatPrice} from "../../utils/formatPrice";
 import {useNavigate} from "react-router-dom";
 import ProductActions from "./ProductActions";
-import styles from "./ProductCard.module.css";
+import styles from "./styles/ProductCard.module.css";
 
 
 export default function ProductCard({

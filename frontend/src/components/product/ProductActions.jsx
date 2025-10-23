@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectCartItems } from "../../features/cart/cartSelectors";
-import styles from "./ProductActions.module.css";
+import styles from "./styles/ProductActions.module.css";
 
 export default function ProductActions({
     product,

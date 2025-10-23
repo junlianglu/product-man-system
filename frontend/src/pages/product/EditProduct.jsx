@@ -5,6 +5,7 @@ import { editProduct,fetchProductById } from "../../features/product/productThun
 import {selectProductStatus, selectSelectedProduct} from "../../features/product/productSelectors";
 import ProductForm from "../../components/product/ProductForm";
 import { useNavigate} from "react-router-dom";
+import styles from "./styles/EditProduct.module.css";
 
 
 export default function EditProduct(){
@@ -21,7 +22,7 @@ export default function EditProduct(){
     const handleSubmit = async (data) => {
         if(!product) return;
         try{
-            dispatch(editProduct({productId: product._id, productData: data})).unwrap();
+            await dispatch(editProduct({productId: product._id, productData: data})).unwrap();
             alert("Product updated successfully!");
             navigate("/");  
         }catch(err){
@@ -34,8 +35,10 @@ export default function EditProduct(){
 
     return (
         <div>
-            <h2>Edit product</h2>
-            <ProductForm onSubmit={handleSubmit} initialData={product}/>            
+            <h1 className={styles.pageTitle}>Edit Product</h1>
+            <div className={styles.formContainer}>
+                <ProductForm onSubmit={handleSubmit} initialData={product}/>            
+            </div>
         </div>
     );
 }

@@ -6,7 +6,7 @@ import {fetchProductById} from "../../features/product/productThunks";
 import {addToCartThunk,updateItemQuantityThunk} from "../../features/cart/cartThunks";
 import {selectAuthIsAdmin,selectAuthIsAuthenticated} from "../../features/auth/authSelectors";
 import ProductActions from "../../components/product/ProductActions";
-import styles from "./ProductDetail.module.css";
+import styles from "./styles/ProductDetail.module.css";
 
 export default function ProductDetail(){
     const {productId} = useParams();
@@ -37,22 +37,39 @@ export default function ProductDetail(){
 
 
   return (
-    <div className={styles.container}>
-      <img src={product.imageURL} alt={product.name} className={styles.image} />
-      <h2 ame={styles.title}>{product.name}</h2>
-      <p className={styles.details}>Description: {product.description}</p>
-      <p className={styles.details}>Category: {product.category}</p>
-      <p className={styles.details}>Stock: {product.stock}</p>
-      <p className={styles.price}>Price: ${product.price}</p>
+    <div className={styles.pageWrapper}>
+      <h1 className={styles.pageTitle}>Product Detail</h1>
+      <div className={styles.container}>
+        <div className={styles.imageSection}>
+          <img src={product.imageURL} alt={product.name} className={styles.image} />
+        </div>
+        <div className={styles.infoSection}>
+          <p className={styles.category}>Category: {product.category}</p>
+          <h2 ame={styles.title}>{product.name}</h2>
+          <p className={styles.price}>Price: ${product.price}</p>  
+          <div className={styles.stockWrapper}>
+            {product.stock > 0 ? (
+              <span className={styles.inStock}>In Stock</span>
+            ) : (
+              <span className={styles.outOfStock}>Out of Stock</span>
+            )}
+            <p className={styles.stock}>Stock: {product.stock}</p>
+          </div> 
+          <p className={styles.description}>Description: {product.description}</p>
+      
+          <div className={styles.actions}>
+            <ProductActions
+              product={product}
+              isAdmin={isAdmin}
+              isAuthenticated={isAuthenticated}
+              onAddToCart={handleAddToCart}
+              onUpdateQuantity={handleUpdateQuantity}
+              onEdit={handleEdit}
+            />
+          </div>
+        </div>
 
-      <ProductActions
-        product={product}
-        isAdmin={isAdmin}
-        isAuthenticated={isAuthenticated}
-        onAddToCart={handleAddToCart}
-        onUpdateQuantity={handleUpdateQuantity}
-        onEdit={handleEdit}
-      />
+      </div>
     </div>
   );
 }
