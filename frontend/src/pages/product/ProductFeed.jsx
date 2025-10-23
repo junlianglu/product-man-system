@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProducts} from "../../features/product/productThunks";
 import {selectAllProducts,selectProductStatus} from "../../features/product/productSelectors";
@@ -7,6 +7,8 @@ import {selectAuthIsAdmin,selectAuthIsAuthenticated} from "../../features/auth/a
 import {addToCartThunk,updateItemQuantityThunk} from "../../features/cart/cartThunks";
 import {useNavigate} from "react-router-dom";
 import styles from "./styles/ProductFeed.module.css";
+import { debounce } from "lodash";
+
 
 export default function ProductFeed() {
     const dispatch = useDispatch();
@@ -15,18 +17,26 @@ export default function ProductFeed() {
     const isAdmin = useSelector(selectAuthIsAdmin);
     const isAuthenticated = useSelector(selectAuthIsAuthenticated);
     const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState("");
+    const searchRef = useRef(null);
+
+
 
     const [sortOption, setSortOption] = useState("priceLowToHigh");
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        dispatch(fetchProducts({page: currentPage, limit: 10})).unwrap()
-        .then((data) => {
-            if(data && data.totalPages)
-                    setTotalPages(data.totalPages);
-        }).catch(() => {});
-    }, [dispatch, currentPage]);
+        const timeout = setTimeout(() => {
+            dispatch(fetchProducts({page: currentPage, limit: 10, search: searchTerm})).unwrap()
+            .then((data) => {
+                if(data && data.totalPages) setTotalPages(data.totalPages);
+                if (searchRef.current) searchRef.current.focus();
+            }).catch(() => {});
+        }, 500);
+
+        return () => clearTimeout(timeout);
+    }, [dispatch, currentPage, searchTerm]);
 
     const sortedProducts = [...products].sort((a,b) => {
         if(sortOption === "lastAdded") return new Date(b.createdAt) - new Date(a.createdAt);
@@ -53,6 +63,15 @@ export default function ProductFeed() {
         <div className={styles.feedContainer}>
             <div className={styles.feedHeader}>
                 <h2>Products</h2>
+                <input
+                    ref={searchRef}
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={styles.searchInput}
+                />
+
                 <div className={styles.sortControls}>
                     <select
                         value={sortOption}
