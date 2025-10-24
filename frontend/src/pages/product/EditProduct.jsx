@@ -34,9 +34,9 @@ export default function EditProduct(){
     if (!product) return <p>Product not found.</p>;    
 
     return (
-        <div>
+        <div className={styles.pageWrapper}>
             <h1 className={styles.pageTitle}>Edit Product</h1>
-            <div className={styles.formContainer}>
+            <div className={styles.formWrapper}>
                 <ProductForm onSubmit={handleSubmit} initialData={product}/>            
             </div>
         </div>

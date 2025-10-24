@@ -105,6 +105,14 @@ export default function ProductForm({onSubmit, initialData = {}}){
                             required
                             className={styles.input}
                         />
+                    ) : key === "description" ? (
+                        <textarea
+                        name="description"
+                        value={form.description}
+                        onChange={handleChange}
+                        className={styles.textarea}
+                        required
+                        />
                     ) : (                        
                         
                         <input
@@ -120,10 +128,13 @@ export default function ProductForm({onSubmit, initialData = {}}){
             ))}
             <div className={styles.field}>
                 <label className={styles.label}>Image URL:</label>
-                <div className={styles.imageUploadContainer}>
+                <div className={styles.imageInputWrapper}>
                     <input
-                        type="text" placeholder="http://" value={form.imageURL} onChange={handleImageUrlChange}
-                        className={styles.input}
+                        type="text" 
+                        placeholder="http://" 
+                        value={form.imageURL} 
+                        onChange={handleImageUrlChange}
+                        className={styles.imageInput}
                     />
                     <button type="button" 
                     className={styles.uploadButton}
