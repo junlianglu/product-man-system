@@ -22,6 +22,8 @@ export default function ProductFeed() {
 
 
     const [sortOption, setSortOption] = useState("priceLowToHigh");
+    //const [sortTrigger, setSortTrigger] = useState(0);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
@@ -35,14 +37,15 @@ export default function ProductFeed() {
         }, 500);
 
         return () => clearTimeout(timeout);
-    }, [dispatch, currentPage, searchTerm]);
+    }, [dispatch, currentPage, searchTerm, sortOption]);
 
-    const sortedProducts = [...products].sort((a,b) => {
-        if(sortOption === "lastAdded") return new Date(b.createdAt) - new Date(a.createdAt);
-        if(sortOption === "priceLowToHigh") return a.price - b.price;
-        if(sortOption === "priceHighToLow") return b.price - a.price;
-        return 0;
-    });
+    //const sortedProducts = [...products];
+    // .sort((a,b) => {
+    //     if(sortOption === "lastAdded") return new Date(b.createdAt) - new Date(a.createdAt);
+    //     if(sortOption === "priceLowToHigh") return a.price - b.price;
+    //     if(sortOption === "priceHighToLow") return b.price - a.price;
+    //     return 0;
+    // });
 
     const handleAddToCart = (productId) => {
         if(!isAuthenticated){
@@ -96,7 +99,7 @@ export default function ProductFeed() {
             </div>
 
             <div className={styles.productGrid}>
-                {sortedProducts.map((p) => (
+                {[...products].map((p) => (
                     <ProductCard 
                      key={p._id}
                      product={p}
