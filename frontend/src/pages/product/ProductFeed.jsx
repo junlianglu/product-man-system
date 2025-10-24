@@ -27,7 +27,7 @@ export default function ProductFeed() {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            dispatch(fetchProducts({page: currentPage, limit: 10, search: searchTerm})).unwrap()
+            dispatch(fetchProducts({page: currentPage, limit: 10, sort: sortOption, search: searchTerm})).unwrap()
             .then((data) => {
                 if(data && data.totalPages) setTotalPages(data.totalPages);
                 if (searchRef.current) searchRef.current.focus();

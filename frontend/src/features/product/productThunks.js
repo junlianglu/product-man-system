@@ -4,10 +4,10 @@ import {getAllProducts, getProductById,deleteProductById,
 } from "../../api/products";
 
 export const fetchProducts = createAsyncThunk("products/fetchAll", 
-    async ({page = 1, limit = 10, search = ""}, thunkAPI) => {
+    async ({page = 1, limit = 10, sort = "default", search = ""}, thunkAPI) => {
         try{
             const token = thunkAPI.getState().auth.token;
-            const data = await getAllProducts(page, limit, token, search);
+            const data = await getAllProducts(page, limit, token, sort, search);
             return data;
         }catch (err){
             return thunkAPI.rejectWithValue(err.message);

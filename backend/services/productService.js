@@ -15,7 +15,7 @@ export const getProductById = async ({productId}) => {
     return product;
 };
 
-export const getAllProducts = async ({page=1, limit = 10, search = ""}) => {
+export const getAllProducts = async ({page=1, limit = 10,sort = "default", search = ""}) => {
     const skip = (page - 1)*limit;
     const query = search ? {$or: [
             { name: { $regex: search, $options: "i" } },
@@ -24,8 +24,13 @@ export const getAllProducts = async ({page=1, limit = 10, search = ""}) => {
             ]
         } : {};
 
+    let sortOption = {};
+    if (sort === "lastAdded") sortOption = { createdAt: -1 };
+    else if (sort === "priceLowToHigh") sortOption = { price: 1 };
+    else if (sort === "priceHighToLow") sortOption = { price: -1 };        
+
     const [products, totalCount] = await Promise.all([
-        Product.find(query).skip(skip).limit(limit),
+        Product.find(query).sort(sortOption).skip(skip).limit(limit),
         Product.countDocuments(query),
     ]);
 
