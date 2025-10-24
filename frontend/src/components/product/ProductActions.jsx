@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectCartItems } from "../../features/cart/cartSelectors";
 import styles from "./styles/ProductActions.module.css";
+import { selectAuthUser } from "../../features/auth/authSelectors";
 
 export default function ProductActions({
     product,
@@ -11,8 +12,12 @@ export default function ProductActions({
     onUpdateQuantity,
     onEdit,
     }) {
-    const { _id, stock } = product;
+    const { _id, stock, admin } = product;
     const cartItems = useSelector(selectCartItems);
+    const currentUser = useSelector(selectAuthUser); 
+
+    const isOwner = currentUser.id === admin;  
+
     const existingCartItem = cartItems.find((item) => item.product._id === _id);
     const [quantity, setQuantity] = useState(existingCartItem ? existingCartItem.quantity : 0);
     const [isLocalChange, setIsLocalChange] = useState(false);// avoid quantity shwing problem "wait"
@@ -69,7 +74,7 @@ export default function ProductActions({
             isAuthenticated && <button className={styles.button} onClick={handleAdd}>Add</button>
         )}
 
-        {isAdmin && (
+        {isAdmin && isOwner &&(
             <button className={`${styles.button} ${styles.editButton}`} onClick={onEdit}>
             Edit
             </button>
