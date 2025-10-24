@@ -23,7 +23,6 @@ export default function EditProduct(){
         if(!product) return;
         try{
             await dispatch(editProduct({productId: product._id, productData: data})).unwrap();
-            alert("Product updated successfully!");
             navigate("/");  
         }catch(err){
             alert(`Failed to update product: ${err}`);

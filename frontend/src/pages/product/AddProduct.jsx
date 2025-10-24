@@ -12,7 +12,6 @@ export default function AddProduct() {
     const handleSubmit = async (data) => {
         try{
             await dispatch(addProduct(data)).unwrap();
-            alert("Product added successfully!");
             navigate("/");  
         } catch{
             alert(`Failed to add product: ${err}`);
