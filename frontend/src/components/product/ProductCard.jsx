@@ -38,6 +38,14 @@ export default function ProductCard({
             />
             <h3 className={styles.name}>{name}</h3>
             <p className={styles.price}>{formatPrice(price)}</p>
+            <p>
+            {product.stock > 0 ? (
+                <>Stock: {product.stock}</>
+            ) : (
+                <span style={{ color: "red", fontWeight: "bold" }}>Out of Stock</span>
+            )}
+            </p>
+
 
             <ProductActions
                 product={product}

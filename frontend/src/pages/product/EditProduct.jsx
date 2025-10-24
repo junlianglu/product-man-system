@@ -1,11 +1,12 @@
 import React, {useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { editProduct,fetchProductById } from "../../features/product/productThunks";
+import { editProduct,fetchProductById,removeProduct  } from "../../features/product/productThunks";
 import {selectProductStatus, selectSelectedProduct} from "../../features/product/productSelectors";
 import ProductForm from "../../components/product/ProductForm";
 import { useNavigate} from "react-router-dom";
 import styles from "./styles/EditProduct.module.css";
+
 
 
 export default function EditProduct(){
@@ -29,6 +30,16 @@ export default function EditProduct(){
         }       
     };
 
+    const handleDelete = async () => {
+        try {
+        await dispatch(removeProduct(product._id)).unwrap();
+        alert("Product deleted successfully!");
+        navigate("/");
+        } catch (err) {
+        alert(`Failed to delete product: ${err}`);
+        }
+    };
+
     if (status === "loading") return <p>Loading product...</p>;
     if (!product) return <p>Product not found.</p>;    
 
@@ -36,7 +47,10 @@ export default function EditProduct(){
         <div className={styles.pageWrapper}>
             <h1 className={styles.pageTitle}>Edit Product</h1>
             <div className={styles.formWrapper}>
-                <ProductForm onSubmit={handleSubmit} initialData={product}/>            
+                <ProductForm onSubmit={handleSubmit} initialData={product}/>  
+                <button onClick={handleDelete} className={styles.deleteButton}>
+                    Delete Product
+                </button>          
             </div>
         </div>
     );
