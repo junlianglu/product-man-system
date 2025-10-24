@@ -1,3 +1,32 @@
+
+.imageInput {
+  width: 100%;
+  padding: 10px 90px 10px 12px; 
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.imageInput:focus {
+  border-color: #646cff;
+  box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.2);
+}
+
+.textarea {
+  width: 100%;
+  min-height: 120px;
+  font-size: 1rem;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: vertical; 
+}
+
+
+
 .formContainer {
   display: flex;
   flex-direction: column;
@@ -39,25 +68,31 @@
   box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.2);
 }
 
-.imageUploadContainer {
+.imageInputWrapper {
+  position: relative;
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 8px;
 }
 
 .uploadButton {
-  padding: 6px 12px;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
   background-color: #646cff;
-  color: #fff;
+  color: white;
   border: none;
   border-radius: 6px;
+  padding: 6px 12px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
   transition: background-color 0.2s ease;
 }
 
 .uploadButton:hover {
-  background-color: #4b51e2;
+  background-color: #5558ff;
 }
 
 .imagePreview {
