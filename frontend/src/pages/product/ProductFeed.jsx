@@ -74,7 +74,12 @@ export default function ProductFeed() {
                 <div className={styles.sortControls}>
                     <select
                         value={sortOption}
-                        onChange={(e) => setSortOption(e.target.value)}
+                        onChange={(e) => 
+                            {
+                                setSortOption(e.target.value);
+                                setCurrentPage(1);
+                            }
+                        }
                         className={styles.sortSelect}
                     >
                         <option value="lastAdded">Last Added</option>
