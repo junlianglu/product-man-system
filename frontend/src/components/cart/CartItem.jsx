@@ -12,19 +12,6 @@ const CartItem = ({ item }) => {
     const [inputQuantity, setInputQuantity] = useState(quantity);
     const dispatch = useDispatch();
     
-
-    const handleInputQuantityChange = (e) => {
-        if (e.target.value === '') {
-            setInputQuantity('');
-            return;
-        }
-        const newQuantity = parseInt(e.target.value);
-        if (Number.isInteger(newQuantity) && newQuantity >= 1 && newQuantity <= product.stock) {
-            setInputQuantity(newQuantity);
-            dispatch(updateItemQuantityThunk({ productId: product._id, quantity: newQuantity }));
-        }
-    };
-    
     const handleIncrement = () => {
         setInputQuantity(prev => {
             const newQuantity = prev + 1;
@@ -61,12 +48,8 @@ const CartItem = ({ item }) => {
                     <button onClick={handleDecrement} disabled={inputQuantity <= 1}>-</button>
                     <input
                         type="number"
-                        min='1'
-                        max={product.stock}
-                        step='1'
                         value={inputQuantity}
-                        onChange={(e) => handleInputQuantityChange(e)}
-                        required
+                        readOnly
                     />
                     <button onClick={handleIncrement} disabled={inputQuantity >= product.stock}>+</button>
                 </div>

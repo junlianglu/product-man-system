@@ -1,106 +1,85 @@
-authController.js  
-loginUserController()  
-signupUserController()  
-sendResetLinkController()
+# 🛍️ Product Management System
 
-authService.js  
-loginUser({ email, password })  
-signupUser({ email, password, isAdmin })  
-sendResetLink({ userId, email })
+## ⚙️ Tech Stack
 
-productController.js  
-createProductController()  
-getProductByIdController()  
-getAllProductsController()  
-updateProductByIdController()  
-deleteProductByIdController()
+### Frontend
 
-productService.js  
-createProduct({ userId, productData })  
-getProductById({ productId })  
-getAllProducts()  
-updateProductById({ userId, productId, productData })  
-deleteProductById({ userId, productId})
+- **React 18**
+- **Redux Toolkit (RTK)**
+- **React Router DOM**
+- **CSS Modules**
+- **Vite**
+- **LocalStorage**
 
-cartController.js  
-getCartWithSummaryController()  
-addToCartController()  
-updateItemQuantityController()  
-applyDiscountCodeController()
+### Backend
 
-cartService.js:  
-DISCOUNT_CODES \= {  
- ‘20 DOLLAR OFF’: {  
- type: 'amount',  
- value: 20  
- },  
- ‘20 PERCENT OFF’: {  
- type: 'percentage',  
- value: 0.2  
- },  
-}
+- **Node.js**
+- **Express.js**
+- **MongoDB + Mongoose**
+- **JWT**
+- **bcrypt.js**
+- **dotenv**
 
-const isObjectIdValid \= id \=\> mongoose.Types.ObjectId.isValid(id);
+---
 
-getCartWithSummary({ userId }) // return object: { cart, summary: { subtotal, discount, tax, total } }  
-addToCart({ userId, productId, quantity })  
-updateItemQuantity({ userId, productId, quantity })  
-applyDiscountCode({ userId, discountCode })
+## 🧰 Setup Instructions
 
-product_management/  
-└── backend/  
- ├── controllers/  
- │ └── authController.js  
- │ └── productController.js  
- │ └── cartController.js  
- ├── services/  
- │ └── authService.js  
- │ └── productService.js  
- │ └── cartService.js  
- ├── routes/  
- │ └── authRoutes.js  
- │ └── productRoutes.js  
- │ └── cartRoutes.js  
- ├── models/  
- │ └── User.js  
- │ └── Product.js  
- │ └── Cart.js  
- ├── middlewares/  
- │ └── authMiddleware.js  
- ├── utils/  
- │ └── hashPassword.js  
- ├── config/  
- │ └── db.js  
- ├── app.js  
- ├── server.js  
- └── .env
+### 1. Clone the Repository
 
-Models:
+```bash
+git clone https://github.com/junlianglu/product-man-system.git
+cd product-man-system
+```
 
-- User
-  - email: { String, unique, required, lowercase, trim, match: /.+@.+\\..+/ }
-  - password: { String, required, minlength: 6 }
-  - isAdmin: { Boolean, default: false}
-  - products: \[{ type: mongoose.Schema.Types.ObjectId, ref: ‘Product’, required }\], default: \[\]
-  - cart: { type: mongoose.Schema.Types.ObjectId, ref: ‘Cart’ }
-- Product
-  - name: { String, required }
-  - description: { String, required }
-  - category: { String, enum: \['electronics', 'clothing', 'books', 'beauty', 'home', 'sports'\], required, default 'electronics' }
-  - price: { Number, required }
-  - stock: { Number (non-positive integer), required }
-  - imageURL: { String, required }
-  - admin: { type: mongoose.Schema.Types.ObjectId, ref: ‘User’, required }
-- Cart: TAX_RATE_BUCKETS \= \[0, 0.05, 0.1\];
+---
 
-  - items: \[{
+### 2. Backend Setup
 
-    { product: type: mongoose.Schema.Types.ObjectId, ref: ‘Product’, required },
+```bash
+cd backend
+npm install
+cp .env.example .env    # Replace with your values
+npm run dev             # Starts backend server on http://localhost:5001
+```
 
-        { quantity: Number (positive integer), min: 1, required: true }
+> Example `.env` file:
 
-    }\], default: \[\]
+```
+MONGO_URI=mongodb://localhost:27017/product_management
+PORT=5001
+JWT_SECRET=your_jwt_secret_key
+```
 
-  - taxRate: { Number, enum: TAX_RATE_BUCKETS, required, default random }
-  - discountCode: { String, default: null } updated when applied valid discount code
-  - user: { type: mongoose.Schema.Types.ObjectId, ref: ‘User’, required }
+---
+
+### 3. Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm run dev             # Starts frontend on http://localhost:5173
+```
+
+> Configure your frontend `.env` file to connect with backend:
+
+```
+VITE_API_BASE_URL=http://localhost:5001/api
+```
+
+---
+
+### 4. Default URLs
+
+| Service  | URL                       |
+| -------- | ------------------------- |
+| Frontend | http://localhost:5173     |
+| Backend  | http://localhost:5001/api |
+
+---
+
+### 5. Notes
+
+- The backend and frontend should run simultaneously.
+- Make sure MongoDB is running locally or use a cloud database (MongoDB Atlas).
+- You can modify the base URL or ports in the `.env` files.
+- Recommended Node.js version: **v18 or later**.

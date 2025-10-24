@@ -13,6 +13,8 @@ import {
 } from "../../features/cart/cartSelectors.js";
 import { selectAuthIsAuthenticated } from "../../features/auth/authSelectors.js";
 import styles from './CartDrawer.module.css';
+import { IoClose } from 'react-icons/io5';
+
 
 const CartDrawer = () => {
     const dispatch = useDispatch();
@@ -58,6 +60,10 @@ const CartDrawer = () => {
     return (
         <div className={styles.overlay} onClick={handleOverlayClick}>
             <div className={styles.drawer} onClick={handleDrawerClick}>
+                <div className={styles.drawerHeader}>
+                    <h2>Cart ({itemsCount})</h2>
+                    <button onClick={handleClose}><IoClose /></button>
+                </div>
                 {status === 'loading' ? <p>Loading Cart...</p>
                     : items.length === 0 ? (
                         <div className={styles.emptyCartMessage}>
@@ -65,11 +71,7 @@ const CartDrawer = () => {
                         </div>
                     )
                     : (
-                        <>
-                            <div className={styles.drawerHeader}>
-                                <h2>Cart ({itemsCount})</h2>
-                                <button onClick={handleClose}>x</button>
-                            </div>
+                        <>  
                             <div>
                                 {items.map(item => <CartItem key={item.product._id} item={item} />)}
                             </div>

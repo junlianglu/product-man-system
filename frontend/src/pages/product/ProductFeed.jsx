@@ -7,7 +7,6 @@ import {selectAuthIsAdmin,selectAuthIsAuthenticated} from "../../features/auth/a
 import {addToCartThunk,updateItemQuantityThunk} from "../../features/cart/cartThunks";
 import {useNavigate} from "react-router-dom";
 import styles from "./styles/ProductFeed.module.css";
-import { debounce } from "lodash";
 
 
 export default function ProductFeed() {
