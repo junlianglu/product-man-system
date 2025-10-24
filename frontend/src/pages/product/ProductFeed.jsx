@@ -22,30 +22,22 @@ export default function ProductFeed() {
 
 
     const [sortOption, setSortOption] = useState("priceLowToHigh");
-    //const [sortTrigger, setSortTrigger] = useState(0);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            dispatch(fetchProducts({page: currentPage, limit: 10, sort: sortOption, search: searchTerm})).unwrap()
+            dispatch(fetchProducts({page: currentPage, limit: 10, sort: sortOption, search: searchTerm}))
+            .unwrap()
             .then((data) => {
                 if(data && data.totalPages) setTotalPages(data.totalPages);
-                if (searchRef.current) searchRef.current.focus();
+                if (searchTerm && searchRef.current) searchRef.current.focus();
             }).catch(() => {});
         }, 500);
 
         return () => clearTimeout(timeout);
     }, [dispatch, currentPage, searchTerm, sortOption]);
-
-    //const sortedProducts = [...products];
-    // .sort((a,b) => {
-    //     if(sortOption === "lastAdded") return new Date(b.createdAt) - new Date(a.createdAt);
-    //     if(sortOption === "priceLowToHigh") return a.price - b.price;
-    //     if(sortOption === "priceHighToLow") return b.price - a.price;
-    //     return 0;
-    // });
 
     const handleAddToCart = (productId) => {
         if(!isAuthenticated){
@@ -59,8 +51,8 @@ export default function ProductFeed() {
         dispatch(updateItemQuantityThunk({productId, quantity}));
     }
 
-    if(status === "loading") return <p>Loading products...</p>;
-    if(status === "failed") return <p>Error loading products.</p>;
+    //if(status === "loading") return <p>Loading products...</p>;
+    //if(status === "failed") return <p>Error loading products.</p>;
     return (
         <div className={styles.feedContainer}>
             <div className={styles.feedHeader}>
@@ -70,7 +62,9 @@ export default function ProductFeed() {
                     type="text"
                     placeholder="Search products..."
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e) => {setSearchTerm(e.target.value);
+                        setCurrentPage(1);}
+                    }
                     className={styles.searchInput}
                 />
 
@@ -98,8 +92,15 @@ export default function ProductFeed() {
                 </div>
             </div>
 
+            {status === "loading" && <p className={styles.loadingText}>Loading products...</p>}
+            {status === "failed" && <p className={styles.errorText}>Error loading products.</p>}
+
+            {status === "succeeded" && products.length === 0 && (
+                <p className={styles.noResultsText}>No products found.</p>
+            )}  
+
             <div className={styles.productGrid}>
-                {[...products].map((p) => (
+                {products.map((p) => (
                     <ProductCard 
                      key={p._id}
                      product={p}
@@ -110,7 +111,7 @@ export default function ProductFeed() {
                      />
                 ))}
             </div>
-
+ 
             <div className={styles.pagination}>
                 <button className={styles.pageButton} 
                     disabled={currentPage ===1} 
