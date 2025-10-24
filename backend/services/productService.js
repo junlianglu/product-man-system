@@ -29,7 +29,7 @@ export const getAllProducts = async ({page=1, limit = 10, search = ""}) => {
         Product.countDocuments(query),
     ]);
 
-    const totalPages = Math.ceil(totalCount / limit);
+    const totalPages = Math.max(Math.ceil(totalCount / limit),1);
     return { products, totalPages, currentPage: page};
 };
 
