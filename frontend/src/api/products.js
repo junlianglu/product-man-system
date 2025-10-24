@@ -1,8 +1,8 @@
 import {apiRequest} from "./base";
 
-export const getAllProducts = (page = 1, limit = 10, token, search = "") => {
+export const getAllProducts = (page = 1, limit = 10, token, sort = "default", search = "") => {
     const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
-    return apiRequest(`/products?page=${page}&limit=${limit}${searchParam}`, {method: "GET"}, token);
+    return apiRequest(`/products?page=${page}&limit=${limit}&sort=${sort}${searchParam}`, {method: "GET"}, token);
 };
 
 export const getProductById = (productId, token) => {
